@@ -13,7 +13,7 @@ import java.net.URL;
 /**
  *
  */
-public class GithubUserApiData {
+public class GithubApiUserData {
 
     /**
      *
@@ -31,7 +31,7 @@ public class GithubUserApiData {
      * @param nickname
      * @throws Exception
      */
-    public GithubUserApiData(String nickname) throws Exception {
+    public GithubApiUserData(String nickname) throws Exception {
         this.userUrlAPI = "https://api.github.com/users/" + nickname;
 
         this.fetchData();

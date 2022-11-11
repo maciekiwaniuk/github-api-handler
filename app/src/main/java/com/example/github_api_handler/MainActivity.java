@@ -62,13 +62,8 @@ public class MainActivity extends AppCompatActivity {
         loadingPanel.setVisibility(View.VISIBLE);
 
         try {
-            GithubUserApiData userData = new GithubUserApiData(nickname);
+            GithubApiUserData userData = new GithubApiUserData(nickname);
             infoTextView.setVisibility(View.GONE);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            infoTextView.setText("An error occurred, please try again later");
-            infoTextView.setVisibility(View.VISIBLE);
 
         } catch (Exception e) {
             e.printStackTrace();
