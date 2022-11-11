@@ -7,6 +7,20 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:id="@+id/loadingPanel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@android:color/transparent">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"/>
+    </RelativeLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -16,7 +30,7 @@
         android:textSize="18sp"/>
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/nicknameText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
@@ -27,9 +41,9 @@
         android:hint="Enter nickname:"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/searchBtn"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="110dp"
@@ -46,15 +60,17 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/infoTextView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="Couldn't find user with that nickname."
                 android:textAlignment="center"
                 android:gravity="center"
                 android:textSize="18sp"
-                android:visibility="invisible"/>
+                android:visibility="gone"/>
 
         </LinearLayout>
     </ScrollView>
+
+
 
 </LinearLayout>
