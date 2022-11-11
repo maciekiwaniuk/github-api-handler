@@ -28,11 +28,11 @@ public class GithubApiUserData {
     /**
      *
      *
-     * @param nickname
+     * @param username
      * @throws Exception
      */
-    public GithubApiUserData(String nickname) throws Exception {
-        this.userUrlAPI = "https://api.github.com/users/" + nickname;
+    public GithubApiUserData(String username) throws Exception {
+        this.userUrlAPI = "https://api.github.com/users/" + username;
 
         this.fetchData();
     }

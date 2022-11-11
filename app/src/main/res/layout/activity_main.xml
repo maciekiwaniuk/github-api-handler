@@ -7,30 +7,16 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <RelativeLayout
-        android:id="@+id/loadingPanel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:background="@android:color/transparent">
-
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"/>
-    </RelativeLayout>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Please enter nickname of GitHub account"
+        android:text="Please enter username of GitHub account"
         android:textAlignment="center"
         android:gravity="center"
         android:textSize="18sp"/>
 
     <EditText
-        android:id="@+id/nicknameText"
+        android:id="@+id/usernameText"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
@@ -38,7 +24,7 @@
         android:layout_marginRight="30dp"
         android:padding="5dp"
         android:inputType="textPersonName"
-        android:hint="Enter nickname:"/>
+        android:hint="Enter username:"/>
 
     <Button
         android:id="@+id/searchBtn"
@@ -50,6 +36,7 @@
         android:layout_marginRight="110dp"
         android:text="Search" />
 
+    <!-- Main element -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -59,6 +46,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <!-- Progress bar -->
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:indeterminate="true"
+                android:visibility="gone"/>
+
+            <!-- Text view to display error message, hidden by default -->
             <TextView
                 android:id="@+id/infoTextView"
                 android:layout_width="match_parent"
@@ -67,6 +64,18 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 android:visibility="gone"/>
+
+            <!-- Element which contains the whole content of fetched data  -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/avatarImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true" />
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
