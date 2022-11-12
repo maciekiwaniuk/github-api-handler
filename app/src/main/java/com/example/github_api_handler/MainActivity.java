@@ -3,6 +3,8 @@ package com.example.github_api_handler;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +28,6 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -90,24 +91,20 @@ public class MainActivity extends AppCompatActivity {
 
             infoTextView.setVisibility(View.GONE);
             try {
-                Drawable drawable = MainActivity.loadImageFromUrl(finalUserData.get("avatar_url"));
+                Drawable userAvatarImageDrawable = Helpers.loadImageFromUrl(finalUserData.get("avatar_url"));
+                userAvatarImageDrawable = this.resize(userAvatarImageDrawable, 350);
                 ImageView avatarImageView = (ImageView) findViewById(R.id.avatarImageView);
-                avatarImageView.setImageDrawable(drawable);
+                avatarImageView.setImageDrawable(userAvatarImageDrawable);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, 1000);
     }
 
-    public static Drawable loadImageFromUrl(String url) {
-        try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable d = Drawable.createFromStream(is, "src name");
-            return d;
-        } catch (Exception e) {
-            return null;
-        }
+    private Drawable resize(Drawable image, int size) {
+        Bitmap b = ((BitmapDrawable)image).getBitmap();
+        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, size, size, false);
+        return new BitmapDrawable(getResources(), bitmapResized);
     }
-
 
 }
