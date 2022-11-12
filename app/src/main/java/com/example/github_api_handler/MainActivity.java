@@ -36,24 +36,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        View rootView = findViewById(android.R.id.content);
 
-        assignEvents(rootView);
+        assignEvents();
     }
 
     /**
      *
      */
-    protected void assignEvents(View view) {
+    protected void assignEvents() {
         Button searchBtn = (Button) findViewById(R.id.searchBtn);
 
-        searchBtn.setOnClickListener(event -> tryToFindUser(view));
+        searchBtn.setOnClickListener(event -> tryToFindUser());
     }
 
     /**
      *
      */
-    protected void tryToFindUser(View view) {
+    protected void tryToFindUser() {
         TextView infoTextView = (TextView) findViewById(R.id.infoTextView);
         infoTextView.setVisibility(View.GONE);
 
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 
             infoTextView.setVisibility(View.GONE);
             try {
-                Drawable userAvatarImageDrawable = Helpers.loadImageFromUrl(finalUserData.get("avatar_url"));
+                Drawable userAvatarImageDrawable = StaticHelper.loadImageFromUrl(finalUserData.get("avatar_url"));
                 userAvatarImageDrawable = this.resize(userAvatarImageDrawable, 350);
                 ImageView avatarImageView = (ImageView) findViewById(R.id.avatarImageView);
                 avatarImageView.setImageDrawable(userAvatarImageDrawable);

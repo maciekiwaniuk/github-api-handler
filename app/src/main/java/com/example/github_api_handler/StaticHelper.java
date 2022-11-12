@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable;
 import java.io.InputStream;
 import java.net.URL;
 
-final public class Helpers {
-    private Helpers() {}
+final public class StaticHelper {
+    private StaticHelper() {}
 
     /**
      *
