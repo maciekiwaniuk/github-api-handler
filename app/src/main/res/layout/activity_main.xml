@@ -1,147 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <TextView
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="android.view.View"/>
+        <variable name="userData" type="com.example.github_api_handler.GithubApiUserData"/>
+    </data>
+    <LinearLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="Please enter username of GitHub account"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:textSize="18sp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/usernameText"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:ems="10"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:padding="5dp"
-        android:inputType="textPersonName"
-        android:hint="Enter username:"/>
-
-    <Button
-        android:id="@+id/searchBtn"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="110dp"
-        android:layout_marginRight="110dp"
-        android:text="Search"/>
-
-    <!-- Main element -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="50dp"
+            android:text="Please enter username of GitHub account"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="18sp"/>
 
-            <!-- Progress bar -->
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="15dp"
-                android:indeterminate="true"
-                android:visibility="gone"/>
+        <EditText
+            android:id="@+id/usernameText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:ems="10"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:padding="5dp"
+            android:inputType="textPersonName"
+            android:hint="Enter username:"/>
 
-            <!-- Text view to display error message, hidden by default -->
-            <TextView
-                android:id="@+id/infoTextView"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:textAlignment="center"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:visibility="gone"/>
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="110dp"
+            android:text="Search"/>
 
-            <!-- Element which contains the whole content of fetched data  -->
+        <!-- Main element -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-                <!-- Avatar, name and username -->
+                <!-- Progress bar -->
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="15dp"
+                    android:indeterminate="true"
+                    android:visibility="@{userData.loadingData ? View.VISIBLE : View.GONE, default=gone}"/>
+
+                <!-- Text view to display error message, hidden by default -->
+                <TextView
+                    android:id="@+id/infoTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:textSize="18sp"
+                    android:text="Couldn\'t find user with passed username"
+                    android:visibility="@{userData.userNotFoundError ? View.VISIBLE : View.GONE, default=gone}"/>
+
+                <!-- Element which contains the whole content of fetched data  -->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="@{userData.readyToDisplay ? View.VISIBLE : View.GONE}">
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="30dp"
-                        android:layout_marginVertical="10dp"
-                        android:elevation="10dp"
-                        app:cardCornerRadius="100dp"
-                        app:cardElevation="2dp"
-                        app:strokeWidth="2dp"
-                        app:strokeColor="@color/black">
-                        <ImageView
-                            android:id="@+id/avatarImageView"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"/>
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <!-- Element for name and username -->
+                    <!-- Avatar, name and username -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/nameTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="70dp"
-                            android:textSize="23sp"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginTop="5dp"
-                            android:gravity="bottom"
-                            android:textStyle="bold"
-                            android:text="Maciek Iwaniuk"/>
-
-                        <TextView
-                            android:id="@+id/usernameTextView"
-                            android:layout_width="match_parent"
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="19sp"
-                            android:textAlignment="textStart"
-                            android:layout_marginStart="15dp"
-                            android:text="maciekiwaniuk"/>
+                            android:layout_marginStart="30dp"
+                            android:layout_marginVertical="10dp"
+                            android:elevation="10dp"
+                            app:cardCornerRadius="100dp"
+                            app:cardElevation="2dp"
+                            app:strokeWidth="2dp"
+                            app:strokeColor="@color/black">
+                            <ImageView
+                                android:id="@+id/avatarImageView"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@{userData.avatarDrawable}"/>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <!-- Element for name and username -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/nameTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:textSize="23sp"
+                                android:layout_marginStart="15dp"
+                                android:layout_marginTop="5dp"
+                                android:gravity="bottom"
+                                android:textStyle="bold"
+                                android:text="@{userData.name}"/>
+
+                            <TextView
+                                android:id="@+id/usernameTextView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="19sp"
+                                android:textAlignment="textStart"
+                                android:layout_marginStart="15dp"
+                                android:text="@{userData.username}"/>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
+                    <!-- Bio -->
+                    <TextView
+                        android:id="@+id/bioTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:textAlignment="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:textSize="19sp"
+                        android:text="@{userData.bio}"/>
+
+                    <!-- Followers, following -->
+
                 </LinearLayout>
 
-                <!-- Bio -->
-                <TextView
-                    android:id="@+id/bioTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:textAlignment="center"
-                    android:layout_marginHorizontal="10dp"
-                    android:textSize="19sp"
-                    android:text="Programming enthusiast"/>
-
-                <!-- Followers, following -->
-
             </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
+        </ScrollView>
 
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>
+

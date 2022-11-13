@@ -13,7 +13,7 @@ final public class StaticHelper {
      * @param url
      * @return
      */
-    public static Drawable loadImageFromUrl(String url) {
+    public static Drawable loadImageDrawableFromUrl(String url) {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, "src name");

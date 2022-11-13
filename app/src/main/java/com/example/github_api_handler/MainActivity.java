@@ -1,6 +1,8 @@
 package com.example.github_api_handler;
 
+import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
@@ -20,6 +22,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.github_api_handler.databinding.ActivityMainBinding;
+
 import org.json.JSONException;
 
 import java.io.FileNotFoundException;
@@ -28,14 +32,18 @@ import java.io.InputStream;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
+    private GithubApiUserData userData;
+    ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+//        setContentView(R.layout.activity_main);
 
+        this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         assignEvents();
     }
@@ -46,57 +54,47 @@ public class MainActivity extends AppCompatActivity {
     protected void assignEvents() {
         Button searchBtn = (Button) findViewById(R.id.searchBtn);
 
-        searchBtn.setOnClickListener(event -> tryToFindUser());
+        searchBtn.setOnClickListener(event -> {
+            try {
+                tryToFindUser();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
      *
      */
-    protected void tryToFindUser() {
-        TextView infoTextView = (TextView) findViewById(R.id.infoTextView);
-        infoTextView.setVisibility(View.GONE);
-
+    protected void tryToFindUser() throws Exception {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         String username = usernameText.getText().toString();
-        if (username.length() == 0) {
-            infoTextView.setText("");
-            return;
-        }
 
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        boolean foundUser = false;
-        GithubApiUserData userData = null;
+        this.userData = new GithubApiUserData(username);
+        this.binding.setUserData(this.userData);
+        
         try {
-            userData = new GithubApiUserData(username);
-            foundUser = true;
+            this.userData.loadingData = true;
+            this.userData.fetchData();
+
+            Drawable avatarDrawable = StaticHelper.loadImageDrawableFromUrl(this.userData.avatarUrl);
+            this.userData.avatarDrawable = this.resize(avatarDrawable, 350);
 
         } catch (Exception e) {
             e.printStackTrace();
-            infoTextView.setText("Couldn't find user with passed username");
+            this.userData.userNotFoundError = false;
         }
 
-        final boolean finalFoundUser = foundUser;
-        final GithubApiUserData finalUserData = userData;
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
-            progressBar.setVisibility(View.GONE);
+            this.userData.loadingData = false;
 
-            if (! finalFoundUser) {
-                infoTextView.setVisibility(View.VISIBLE);
-                return;
-            }
+            this.userData.readyToDisplay = true;
 
-            infoTextView.setVisibility(View.GONE);
-            try {
-                Drawable userAvatarImageDrawable = StaticHelper.loadImageFromUrl(finalUserData.get("avatar_url"));
-                userAvatarImageDrawable = this.resize(userAvatarImageDrawable, 350);
-                ImageView avatarImageView = (ImageView) findViewById(R.id.avatarImageView);
-                avatarImageView.setImageDrawable(userAvatarImageDrawable);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            this.binding.setUserData(this.userData);
         }, 1000);
     }
 
