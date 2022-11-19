@@ -17,49 +17,50 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- *
+ * Fetches and saves data via GitHub API about user by his username.
+ * Variable of this class is bound for main_activity.xml to display fetched data about user.
  */
 public class GithubApiUserData {
 
     /**
-     *
+     * Url which provides all information about user by his username.
      */
     private final String userUrlAPI;
 
     /**
-     *
+     * Information of user.
      */
     public String username;
     public String name;
-    public String avatarUrl;
-    public Drawable avatarDrawable;
     public String reposUrl;
     public String company;
     public String blog;
     public String location;
     public String email;
     public String bio;
+    public String createdAt;
+    public String avatarUrl;
+    public Drawable avatarDrawable;
     public int followers;
     public int following;
-    public String createdAt;
 
     /**
-     *
+     * Specifies if textView with error message should be visible.
      */
     public ObservableBoolean userNotFoundError = new ObservableBoolean(false);
 
     /**
-     *
+     * Specifies if progressBar that imitates loading data should be visible.
      */
     public ObservableBoolean readyToDisplay = new ObservableBoolean(false);
 
     /**
-     *
+     * Specifies if the whole element with fetched user data should be visible.
      */
     public ObservableBoolean loadingData = new ObservableBoolean(false);
 
     /**
-     *
+     * Initializes main API URL.
      *
      * @param username
      * @throws Exception
@@ -69,7 +70,7 @@ public class GithubApiUserData {
     }
 
     /**
-     *
+     * Fetches data using URL and saves it to object attributes.
      *
      * @throws Exception
      */
@@ -93,6 +94,12 @@ public class GithubApiUserData {
         this.assignVariablesAfterFetch(userData);
     }
 
+    /**
+     * Saves data from passed object to attributes.
+     *
+     * @param userData
+     * @throws JSONException
+     */
     public void assignVariablesAfterFetch(JSONObject userData) throws JSONException {
         this.username = userData.getString("login");
         this.name = userData.getString("name");

@@ -5,10 +5,14 @@ import android.graphics.drawable.Drawable;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * Class which contains a bunch of static methods.
+ */
 final public class StaticHelper {
     private StaticHelper() {}
 
     /**
+     * Returns image as Drawable from URL.
      *
      * @param url
      * @return

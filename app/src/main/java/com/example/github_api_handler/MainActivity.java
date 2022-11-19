@@ -31,8 +31,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+/**
+ * @author Maciej Iwaniuk
+ */
 public class MainActivity extends AppCompatActivity {
+
+    /**
+     * Main userData variable that contains information fetched from GitHub API.
+     * Variable is bound to display fetched data about user.
+     */
     private GithubApiUserData userData;
+
+    /**
+     * Binding for activity_main.xml.
+     */
     ActivityMainBinding binding;
 
     @Override
@@ -41,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
 
         this.binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
@@ -49,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Assigns events for elements.
      */
     protected void assignEvents() {
         Button searchBtn = (Button) findViewById(R.id.searchBtn);
@@ -64,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     *
+     * Tries to find and fetch data about user via github api and display it.
      */
     protected void tryToFindUser() throws Exception {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
@@ -103,6 +114,13 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
     }
 
+    /**
+     * Resizes Drawable image.
+     *
+     * @param image
+     * @param size
+     * @return
+     */
     private Drawable resize(Drawable image, int size) {
         Bitmap b = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(b, size, size, false);
