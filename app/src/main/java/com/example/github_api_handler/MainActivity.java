@@ -75,9 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
         this.userData = new GithubApiUserData(username);
         this.binding.setUserData(this.userData);
-        
+
+        boolean userNotFoundError = false;
         try {
-            this.userData.loadingData = true;
+            this.userData.loadingData.set(true);
             this.userData.fetchData();
 
             Drawable avatarDrawable = StaticHelper.loadImageDrawableFromUrl(this.userData.avatarUrl);
@@ -85,16 +86,20 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (Exception e) {
             e.printStackTrace();
-            this.userData.userNotFoundError = false;
+            userNotFoundError = true;
         }
 
         final Handler handler = new Handler(Looper.getMainLooper());
+        final boolean finalUserNotFoundError = userNotFoundError;
         handler.postDelayed(() -> {
-            this.userData.loadingData = false;
+            this.userData.loadingData.set(false);
 
-            this.userData.readyToDisplay = true;
+            if (finalUserNotFoundError) {
+                this.userData.userNotFoundError.set(true);
+                return;
+            }
 
-            this.binding.setUserData(this.userData);
+            this.userData.readyToDisplay.set(true);
         }, 1000);
     }
 

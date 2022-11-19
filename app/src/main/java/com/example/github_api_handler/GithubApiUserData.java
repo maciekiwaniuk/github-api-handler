@@ -4,6 +4,10 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.databinding.ObservableBoolean;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableInt;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +24,7 @@ public class GithubApiUserData {
     /**
      *
      */
-    private String userUrlAPI;
+    private final String userUrlAPI;
 
     /**
      *
@@ -42,17 +46,17 @@ public class GithubApiUserData {
     /**
      *
      */
-    public boolean userNotFoundError = false;
+    public ObservableBoolean userNotFoundError = new ObservableBoolean(false);
 
     /**
      *
      */
-    public boolean readyToDisplay = false;
+    public ObservableBoolean readyToDisplay = new ObservableBoolean(false);
 
     /**
      *
      */
-    public boolean loadingData = false;
+    public ObservableBoolean loadingData = new ObservableBoolean(false);
 
     /**
      *
@@ -86,6 +90,10 @@ public class GithubApiUserData {
 
         JSONObject userData = new JSONObject(response.toString());
 
+        this.assignVariablesAfterFetch(userData);
+    }
+
+    public void assignVariablesAfterFetch(JSONObject userData) throws JSONException {
         this.username = userData.getString("login");
         this.name = userData.getString("name");
         this.avatarUrl = userData.getString("avatar_url");
