@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(event -> {
             try {
                 tryToFindUser();
+                EditText searchEditText = findViewById(R.id.usernameText);
+                searchEditText.setText("");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -81,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         EditText usernameText = (EditText) findViewById(R.id.usernameText);
         String username = usernameText.getText().toString();
 
+        if (username.length() == 0) return;
+
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             this.userData.fetchData();
 
             Drawable avatarDrawable = StaticHelper.loadImageDrawableFromUrl(this.userData.avatarUrl);
-            this.userData.avatarDrawable = this.resize(avatarDrawable, 350);
+            this.userData.avatarDrawable = StaticHelper.resizeImageDrawable(avatarDrawable, 350, getResources());
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,17 +120,6 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
     }
 
-    /**
-     * Resizes Drawable image.
-     *
-     * @param image
-     * @param size
-     * @return
-     */
-    private Drawable resize(Drawable image, int size) {
-        Bitmap b = ((BitmapDrawable)image).getBitmap();
-        Bitmap bitmapResized = Bitmap.createScaledBitmap(b, size, size, false);
-        return new BitmapDrawable(getResources(), bitmapResized);
-    }
+
 
 }

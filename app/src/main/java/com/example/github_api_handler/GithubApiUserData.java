@@ -28,7 +28,7 @@ public class GithubApiUserData {
     private final String userUrlAPI;
 
     /**
-     * Information of user.
+     * User's information.
      */
     public String username;
     public String name;
@@ -40,9 +40,10 @@ public class GithubApiUserData {
     public String bio;
     public String createdAt;
     public String avatarUrl;
+    public String followers;
+    public String following;
     public Drawable avatarDrawable;
-    public int followers;
-    public int following;
+
 
     /**
      * Specifies if textView with error message should be visible.
@@ -101,18 +102,26 @@ public class GithubApiUserData {
      * @throws JSONException
      */
     public void assignVariablesAfterFetch(JSONObject userData) throws JSONException {
+        String name = userData.getString("name");
+        String company = userData.getString("company");
+        String blog = userData.getString("blog");
+        String location = userData.getString("location");
+        String email = userData.getString("email");
+        String bio = userData.getString("bio");
+
         this.username = userData.getString("login");
-        this.name = userData.getString("name");
         this.avatarUrl = userData.getString("avatar_url");
         this.reposUrl = userData.getString("repos_url");
-        this.company = userData.getString("company");
-        this.blog = userData.getString("blog");
-        this.location = userData.getString("location");
-        this.email = userData.getString("email");
-        this.bio = userData.getString("bio");
-        this.followers = Integer.parseInt(userData.getString("followers"));
-        this.following = Integer.parseInt(userData.getString("following"));
-        this.createdAt = userData.getString("created_at");
+        this.followers = userData.getString("followers") + " followers";
+        this.following = userData.getString("following") + " following";
+        this.createdAt = "Account created at " + userData.getString("created_at").substring(0, 10);
+
+        this.name = (name.equals("null") ? null : name);
+        this.company = (company.equals("null") ? null : company);
+        this.blog = (blog.equals("null") ? null : blog);
+        this.location = (location.equals("null") ? null : location);
+        this.email = (email.equals("null") ? null : email);
+        this.bio = (bio.equals("null") ? null : bio);
     }
 
 }
