@@ -66,12 +66,20 @@ public class MainActivity extends AppCompatActivity {
      */
     protected void assignEvents() {
         Button searchBtn = (Button) findViewById(R.id.searchBtn);
-
         searchBtn.setOnClickListener(event -> {
             try {
-                tryToFindUser();
+                this.tryToFindUser();
                 EditText searchEditText = findViewById(R.id.usernameText);
                 searchEditText.setText("");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        Button showRepositoriesBtn = (Button) findViewById(R.id.showRepositoriesBtn);
+        showRepositoriesBtn.setOnClickListener(event -> {
+            try {
+                this.showRepositories();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,15 +95,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (username.length() == 0) return;
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        progressBar.setVisibility(View.VISIBLE);
-
         this.userData = new GithubApiUserData(username);
         this.binding.setUserData(this.userData);
 
         boolean userNotFoundError = false;
         try {
-            this.userData.loadingData.set(true);
+            this.userData.loadingUserData.set(true);
             this.userData.fetchData();
 
             Drawable avatarDrawable = StaticHelper.loadImageDrawableFromUrl(this.userData.avatarUrl);
@@ -109,15 +114,19 @@ public class MainActivity extends AppCompatActivity {
         final Handler handler = new Handler(Looper.getMainLooper());
         final boolean finalUserNotFoundError = userNotFoundError;
         handler.postDelayed(() -> {
-            this.userData.loadingData.set(false);
+            this.userData.loadingUserData.set(false);
 
             if (finalUserNotFoundError) {
                 this.userData.userNotFoundError.set(true);
                 return;
             }
 
-            this.userData.readyToDisplay.set(true);
+            this.userData.readyToDisplayUserData.set(true);
         }, 1000);
+    }
+
+    protected void showRepositories() {
+
     }
 
 

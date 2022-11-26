@@ -22,8 +22,8 @@ final public class StaticHelper {
      */
     public static Drawable loadImageDrawableFromUrl(String url) {
         try {
-            InputStream is = (InputStream) new URL(url).getContent();
-            Drawable drawable = Drawable.createFromStream(is, "src name");
+            InputStream inputStream = (InputStream) new URL(url).getContent();
+            Drawable drawable = Drawable.createFromStream(inputStream, "src name");
             return drawable;
         } catch (Exception e) {
             return null;

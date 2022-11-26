@@ -44,21 +44,35 @@ public class GithubApiUserData {
     public String following;
     public Drawable avatarDrawable;
 
-
     /**
      * Specifies if textView with error message should be visible.
      */
     public ObservableBoolean userNotFoundError = new ObservableBoolean(false);
 
     /**
-     * Specifies if progressBar that imitates loading data should be visible.
+     * Specifies if progressBar that imitates loading data user should be visible.
      */
-    public ObservableBoolean readyToDisplay = new ObservableBoolean(false);
+    public ObservableBoolean loadingUserData = new ObservableBoolean(false);
 
     /**
-     * Specifies if the whole element with fetched user data should be visible.
+     * Specifies if the element with fetched user data should be visible.
      */
-    public ObservableBoolean loadingData = new ObservableBoolean(false);
+    public ObservableBoolean readyToDisplayUserData = new ObservableBoolean(false);
+
+    /**
+     * Specifies if textView with info message that user doesn't have any repositories should be visible.
+     */
+    public ObservableBoolean repositoriesNotFoundInfo = new ObservableBoolean(false);
+
+    /**
+     * Specifies if the element with fetched repositories should be visible.
+     */
+    public ObservableBoolean loadingRepositories = new ObservableBoolean(false);
+
+    /**
+     * Specifies if progressBar that imitates loading repositories should be visible.
+     */
+    public ObservableBoolean readyToDisplayRepositories = new ObservableBoolean(false);
 
     /**
      * Initializes main API URL.
