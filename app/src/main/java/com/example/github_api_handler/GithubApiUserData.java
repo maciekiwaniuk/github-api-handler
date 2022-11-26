@@ -83,9 +83,6 @@ public class GithubApiUserData {
 
     /**
      * Initializes main API URL.
-     *
-     * @param username
-     * @throws Exception
      */
     public GithubApiUserData(String username) throws Exception {
         this.userUrlAPI = "https://api.github.com/users/" + username;
@@ -93,8 +90,6 @@ public class GithubApiUserData {
 
     /**
      * Fetches user data using URL and saves it to object attributes.
-     *
-     * @throws Exception
      */
     public void fetchUserData() throws Exception {
         JSONObject userData = new JSONObject(StaticHelper.fetchDataFromUrlAsString(this.userUrlAPI));
@@ -104,9 +99,6 @@ public class GithubApiUserData {
 
     /**
      * Saves data from passed object to attributes.
-     *
-     * @param userData
-     * @throws JSONException
      */
     public void assignUserDataAfterFetch(JSONObject userData) throws JSONException {
         String name = userData.getString("name");
@@ -133,8 +125,6 @@ public class GithubApiUserData {
 
     /**
      * Fetches repositories using repos URL and saves it.
-     *
-     * @throws Exception
      */
     public void fetchRepositories() throws Exception {
         JSONArray repositoriesData = new JSONArray(StaticHelper.fetchDataFromUrlAsString(this.reposUrl));

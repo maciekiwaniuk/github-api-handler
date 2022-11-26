@@ -21,9 +21,6 @@ public class GithubRepository {
 
     /**
      * Assigns variables from JSON Object
-     *
-     * @param repositoryData
-     * @throws JSONException
      */
     public GithubRepository(JSONObject repositoryData) throws JSONException {
         this.title = repositoryData.getString("name");

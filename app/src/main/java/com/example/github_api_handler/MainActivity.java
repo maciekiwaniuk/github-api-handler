@@ -129,8 +129,14 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
     }
 
+    /**
+     * Creates repositories of user passed by argument.
+     * It creates in loop instances of single_user_repository.xml and adds it to layout.
+     */
     protected void displayRepositories(ArrayList<GithubRepository> githubRepositories) {
         LayoutInflater inflater = getLayoutInflater();
+        LinearLayout repositoriesLayout = findViewById(R.id.repositoriesLayout);
+        repositoriesLayout.removeAllViewsInLayout();
 
         for (int i = 0; i < githubRepositories.size(); i++) {
             View repositorySingleRepositoryLayout = inflater.inflate(R.layout.single_user_repository, findViewById(R.id.activity_main), false);
@@ -141,14 +147,14 @@ public class MainActivity extends AppCompatActivity {
             repoTitle.setText(repo.title);
 
             TextView repoDescription = repositorySingleRepositoryLayout.findViewById(R.id.repoDescription);
-            if (repo.description != "null") {
+            if (!repo.description.equals("null")) {
                 repoDescription.setText(repo.description);
             } else {
                 repoDescription.setVisibility(View.GONE);
             }
 
             TextView repoLanguage = repositorySingleRepositoryLayout.findViewById(R.id.repoLanguage);
-            if (repo.language != "null") {
+            if (!repo.language.equals("null")) {
                 repoLanguage.setText(repo.language);
             } else {
                 repoLanguage.setVisibility(View.GONE);
@@ -169,12 +175,14 @@ public class MainActivity extends AppCompatActivity {
                 repoForks.setVisibility(View.GONE);
             }
 
-            LinearLayout repositoriesLayout = (LinearLayout) findViewById(R.id.repositoriesLayout);
             repositoriesLayout.addView(repositorySingleRepositoryLayout);
         }
 
     }
 
+    /**
+     * Fetches user's repositories and displays it.
+     */
     protected void showRepositories() {
         try {
             this.userData.loadingRepositories.set(true);
@@ -189,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
         final Handler handler = new Handler(Looper.getMainLooper());
         handler.postDelayed(() -> {
             this.userData.loadingRepositories.set(false);
+
+            if (this.userData.githubRepositories.size() == 0) {
+                this.userData.repositoriesNotFoundInfo.set(true);
+            }
 
             this.userData.readyToDisplayRepositories.set(true);
         }, 1000);
