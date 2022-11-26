@@ -5,7 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
@@ -42,6 +47,31 @@ final public class StaticHelper {
         Bitmap bitmap = ((BitmapDrawable)image).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(bitmap, size, size, false);
         return new BitmapDrawable(resources, bitmapResized);
+    }
+
+    /**
+     * Fetches data from passed URL and returns it as String.
+     *
+     * @param URL
+     * @return
+     * @throws Exception
+     */
+    public static String fetchDataFromUrlAsString(String URL) throws Exception {
+        URL obj = new URL(URL);
+        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+        con.setRequestMethod("GET");
+
+        BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+        StringBuilder response = new StringBuilder();
+        String inputLine;
+        while ((inputLine = input.readLine()) != null) {
+            response.append(inputLine);
+        }
+
+        input.close();
+
+        return response.toString();
     }
 
 }

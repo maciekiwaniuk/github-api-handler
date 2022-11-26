@@ -8,6 +8,7 @@ import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 import androidx.databinding.ObservableInt;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -15,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * Fetches and saves data via GitHub API about user by his username.
@@ -43,6 +45,11 @@ public class GithubApiUserData {
     public String followers;
     public String following;
     public Drawable avatarDrawable;
+
+    /**
+     * User's repositories
+     */
+    public ArrayList<GithubRepository> githubRepositories = new ArrayList<>();
 
     /**
      * Specifies if textView with error message should be visible.
@@ -85,28 +92,14 @@ public class GithubApiUserData {
     }
 
     /**
-     * Fetches data using URL and saves it to object attributes.
+     * Fetches user data using URL and saves it to object attributes.
      *
      * @throws Exception
      */
-    public void fetchData() throws Exception {
-        URL obj = new URL(this.userUrlAPI);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-        con.setRequestMethod("GET");
+    public void fetchUserData() throws Exception {
+        JSONObject userData = new JSONObject(StaticHelper.fetchDataFromUrlAsString(this.userUrlAPI));
 
-        BufferedReader input = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
-        StringBuilder response = new StringBuilder();
-        String inputLine;
-        while ((inputLine = input.readLine()) != null) {
-            response.append(inputLine);
-        }
-
-        input.close();
-
-        JSONObject userData = new JSONObject(response.toString());
-
-        this.assignVariablesAfterFetch(userData);
+        this.assignUserDataAfterFetch(userData);
     }
 
     /**
@@ -115,7 +108,7 @@ public class GithubApiUserData {
      * @param userData
      * @throws JSONException
      */
-    public void assignVariablesAfterFetch(JSONObject userData) throws JSONException {
+    public void assignUserDataAfterFetch(JSONObject userData) throws JSONException {
         String name = userData.getString("name");
         String company = userData.getString("company");
         String blog = userData.getString("blog");
@@ -136,6 +129,27 @@ public class GithubApiUserData {
         this.location = (location.equals("null") ? null : location);
         this.email = (email.equals("null") ? null : email);
         this.bio = (bio.equals("null") ? null : bio);
+    }
+
+    /**
+     * Fetches repositories using repos URL and saves it.
+     *
+     * @throws Exception
+     */
+    public void fetchRepositories() throws Exception {
+        JSONArray repositoriesData = new JSONArray(StaticHelper.fetchDataFromUrlAsString(this.reposUrl));
+
+        int limitNumberOfRepositories = 30;
+        int count = 0;
+
+        for (int i = 0; i < repositoriesData.length(); i++) {
+            if (count == limitNumberOfRepositories) break;
+
+            JSONObject repository = repositoriesData.getJSONObject(i);
+            this.githubRepositories.add(new GithubRepository(repository));
+            count++;
+        }
+
     }
 
 }

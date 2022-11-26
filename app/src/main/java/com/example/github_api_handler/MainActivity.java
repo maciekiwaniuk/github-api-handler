@@ -16,10 +16,12 @@ import android.os.Looper;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -27,11 +29,13 @@ import android.widget.TextView;
 import com.example.github_api_handler.databinding.ActivityMainBinding;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * @author Maciej Iwaniuk
@@ -101,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         boolean userNotFoundError = false;
         try {
             this.userData.loadingUserData.set(true);
-            this.userData.fetchData();
+            this.userData.fetchUserData();
 
             Drawable avatarDrawable = StaticHelper.loadImageDrawableFromUrl(this.userData.avatarUrl);
             this.userData.avatarDrawable = StaticHelper.resizeImageDrawable(avatarDrawable, 350, getResources());
@@ -125,8 +129,69 @@ public class MainActivity extends AppCompatActivity {
         }, 1000);
     }
 
-    protected void showRepositories() {
+    protected void displayRepositories(ArrayList<GithubRepository> githubRepositories) {
+        LayoutInflater inflater = getLayoutInflater();
 
+        for (int i = 0; i < githubRepositories.size(); i++) {
+            View repositorySingleRepositoryLayout = inflater.inflate(R.layout.single_user_repository, findViewById(R.id.activity_main), false);
+
+            GithubRepository repo = githubRepositories.get(i);
+
+            TextView repoTitle = repositorySingleRepositoryLayout.findViewById(R.id.repoTitle);
+            repoTitle.setText(repo.title);
+
+            TextView repoDescription = repositorySingleRepositoryLayout.findViewById(R.id.repoDescription);
+            if (repo.description != "null") {
+                repoDescription.setText(repo.description);
+            } else {
+                repoDescription.setVisibility(View.GONE);
+            }
+
+            TextView repoLanguage = repositorySingleRepositoryLayout.findViewById(R.id.repoLanguage);
+            if (repo.language != "null") {
+                repoLanguage.setText(repo.language);
+            } else {
+                repoLanguage.setVisibility(View.GONE);
+            }
+
+
+            TextView repoStars = repositorySingleRepositoryLayout.findViewById(R.id.repoStars);
+            if (Integer.parseInt(repo.stars) > 0) {
+                repoStars.setText(" " + repo.stars);
+            } else {
+                repoStars.setVisibility(View.GONE);
+            }
+
+            TextView repoForks = repositorySingleRepositoryLayout.findViewById(R.id.repoForks);
+            if (Integer.parseInt(repo.forks) > 0) {
+                repoForks.setText(" " + repo.forks);
+            } else {
+                repoForks.setVisibility(View.GONE);
+            }
+
+            LinearLayout repositoriesLayout = (LinearLayout) findViewById(R.id.repositoriesLayout);
+            repositoriesLayout.addView(repositorySingleRepositoryLayout);
+        }
+
+    }
+
+    protected void showRepositories() {
+        try {
+            this.userData.loadingRepositories.set(true);
+            this.userData.fetchRepositories();
+
+            this.displayRepositories(this.userData.githubRepositories);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        final Handler handler = new Handler(Looper.getMainLooper());
+        handler.postDelayed(() -> {
+            this.userData.loadingRepositories.set(false);
+
+            this.userData.readyToDisplayRepositories.set(true);
+        }, 1000);
     }
 
 
