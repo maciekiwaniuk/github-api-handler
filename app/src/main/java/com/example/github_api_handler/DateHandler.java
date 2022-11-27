@@ -1,7 +1,6 @@
 package com.example.github_api_handler;
 
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
