@@ -16,4 +16,4 @@ Open folder where you want to have project files, open console and then clone th
 
 # Application appearance
 
-![](https://github.com/maciekiwaniuk/github-api-handler/blob/main/src/assets/readme/appearance.gif)
+![](https://github.com/maciekiwaniuk/github-api-handler/raw/main/app/src/main/res/readme/appearance.gif)
