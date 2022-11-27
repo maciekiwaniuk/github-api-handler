@@ -18,6 +18,7 @@ public class GithubRepository {
     final public String language;
     final public String stars;
     final public String forks;
+    final public String updatedAt;
 
     /**
      * Assigns variables from JSON Object
@@ -28,5 +29,6 @@ public class GithubRepository {
         this.language = repositoryData.getString("language");
         this.stars = repositoryData.getString("stargazers_count");
         this.forks = repositoryData.getString("forks_count");
+        this.updatedAt = repositoryData.getString("pushed_at");
     }
 }

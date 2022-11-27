@@ -1,5 +1,6 @@
 package com.example.github_api_handler;
 
+import androidx.annotation.RequiresApi;
 import androidx.annotation.WorkerThread;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -10,6 +11,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -35,6 +37,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
      */
     ActivityMainBinding binding;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -68,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Assigns events for elements.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void assignEvents() {
         Button searchBtn = (Button) findViewById(R.id.searchBtn);
         searchBtn.setOnClickListener(event -> {
@@ -133,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
      * Creates repositories of user passed by argument.
      * It creates in loop instances of single_user_repository.xml and adds it to layout.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void displayRepositories(ArrayList<GithubRepository> githubRepositories) {
         LayoutInflater inflater = getLayoutInflater();
         LinearLayout repositoriesLayout = findViewById(R.id.repositoriesLayout);
@@ -160,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
                 repoLanguage.setVisibility(View.GONE);
             }
 
-
             TextView repoStars = repositorySingleRepositoryLayout.findViewById(R.id.repoStars);
             if (Integer.parseInt(repo.stars) > 0) {
                 repoStars.setText(" " + repo.stars);
@@ -175,6 +182,12 @@ public class MainActivity extends AppCompatActivity {
                 repoForks.setVisibility(View.GONE);
             }
 
+            TextView repoWhenUpdated = repositorySingleRepositoryLayout.findViewById(R.id.repoWhenUpdated);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss ");
+            LocalDateTime updatedAt = LocalDateTime.parse(repo.updatedAt.replaceAll("[ZT]", " "), formatter);
+            String whenUpdatedMessage = new DateHandler(updatedAt).getMessageAboutTimeDifferenceSinceNow();
+            repoWhenUpdated.setText(whenUpdatedMessage);
+
             repositoriesLayout.addView(repositorySingleRepositoryLayout);
         }
 
@@ -183,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Fetches user's repositories and displays it.
      */
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void showRepositories() {
         try {
             this.userData.loadingRepositories.set(true);

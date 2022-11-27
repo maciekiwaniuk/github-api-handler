@@ -21,15 +21,12 @@ final public class StaticHelper {
 
     /**
      * Returns image as Drawable from URL.
-     *
-     * @param url
-     * @return - fetched Drawable image from passed URL
      */
     public static Drawable loadImageDrawableFromUrl(String url) {
         try {
             InputStream inputStream = (InputStream) new URL(url).getContent();
-            Drawable drawable = Drawable.createFromStream(inputStream, "src name");
-            return drawable;
+
+            return Drawable.createFromStream(inputStream, "src name");
         } catch (Exception e) {
             return null;
         }
@@ -37,11 +34,6 @@ final public class StaticHelper {
 
     /**
      * Resizes Drawable image.
-     *
-     * @param image
-     * @param size
-     * @param resources
-     * @return
      */
     public static Drawable resizeImageDrawable(Drawable image, int size, Resources resources) {
         Bitmap bitmap = ((BitmapDrawable)image).getBitmap();
@@ -51,10 +43,6 @@ final public class StaticHelper {
 
     /**
      * Fetches data from passed URL and returns it as String.
-     *
-     * @param URL
-     * @return
-     * @throws Exception
      */
     public static String fetchDataFromUrlAsString(String URL) throws Exception {
         URL obj = new URL(URL);
