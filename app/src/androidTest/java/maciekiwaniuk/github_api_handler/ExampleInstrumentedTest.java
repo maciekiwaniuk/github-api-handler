@@ -1,4 +1,4 @@
-package com.example.github_api_handler;
+package maciekiwaniuk.github_api_handler;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.github_api_handler", appContext.getPackageName());
+        assertEquals("maciekiwaniuk.github_api_handler", appContext.getPackageName());
     }
 }

@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <variable name="userData" type="com.example.github_api_handler.GithubApiUserData"/>
+        <variable name="userData" type="maciekiwaniuk.github_api_handler.GithubApiUserData"/>
     </data>
 
     <ScrollView

@@ -1,4 +1,4 @@
-package com.example.github_api_handler;
+package maciekiwaniuk.github_api_handler;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.github_api_handler.databinding.ActivityMainBinding;
+import maciekiwaniuk.github_api_handler.databinding.ActivityMainBinding;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

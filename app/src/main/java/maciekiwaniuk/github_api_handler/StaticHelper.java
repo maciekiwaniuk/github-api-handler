@@ -1,4 +1,4 @@
-package com.example.github_api_handler;
+package maciekiwaniuk.github_api_handler;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

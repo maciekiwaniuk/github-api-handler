@@ -6,7 +6,7 @@ android {
     compileSdk 31
 
     defaultConfig {
-        applicationId "com.example.github_api_handler"
+        applicationId "maciekiwaniuk.github_api_handler"
         minSdk 22
         targetSdk 31
         versionCode 1
