@@ -8,12 +8,18 @@ import java.util.ArrayList;
 
 import maciekiwaniuk.github_api_handler.models.GithubRepository;
 
+/**
+ * Fetches information about user's repositories by passed URL.
+ */
 public class GithubRepositoriesHttpClient extends HttpClient {
 
-    public GithubRepositoriesHttpClient(String URL) throws Exception {
-        super(URL);
+    public GithubRepositoriesHttpClient(String url) throws Exception {
+        super(url);
     }
 
+    /**
+     * Returns fetched data as ArrayList of GithubRepository instances.
+     */
     public ArrayList<GithubRepository> getDataAsRepositoriesArray() throws JSONException {
         ArrayList<GithubRepository> githubRepositories = new ArrayList<>();
 

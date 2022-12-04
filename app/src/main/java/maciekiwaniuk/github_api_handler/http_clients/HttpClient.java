@@ -5,7 +5,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Fetches data from passed URL.
+ */
 public class HttpClient {
+
+    /**
+     * Variable of passed data stored as a String.
+     */
     protected final String data;
 
     public HttpClient(String URL) throws Exception {

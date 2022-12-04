@@ -21,6 +21,9 @@ import maciekiwaniuk.github_api_handler.http_clients.GithubRepositoriesHttpClien
 import maciekiwaniuk.github_api_handler.models.GithubRepository;
 import maciekiwaniuk.github_api_handler.models.GithubUser;
 
+/**
+ * Handles click event on show repositories button. Searches and displays repositories of found user.
+ */
 final public class ShowRepositoriesEvent {
     ActivityMainBinding binding;
 
@@ -60,8 +63,7 @@ final public class ShowRepositoriesEvent {
     }
 
     /**
-     * Creates repositories of user passed by argument.
-     * It creates in loop instances of single_user_repository.xml and adds it to layout.
+     * Creates and displays views of single_user_repository.xml by passed list of repositories.
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     protected void displayRepositories(ArrayList<GithubRepository> githubRepositories) {

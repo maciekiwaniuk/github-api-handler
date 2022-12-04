@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
- * Class which contains a bunch of static methods.
+ * Fetches image by URL and transforms it to Drawable.
  */
 final public class ImageDrawableHttpClient {
     private Drawable image;
@@ -25,17 +25,17 @@ final public class ImageDrawableHttpClient {
     }
 
     /**
-     * Returns image as Drawable from URL.
+     * Returns Drawable image.
      */
     public Drawable getImage() {
         return this.image;
     }
 
     /**
-     * Resizes Drawable image.
+     * Returns resized Drawable image.
      */
     public Drawable getResizedImage(int size, Resources resources) {
-        Bitmap bitmap = ((BitmapDrawable)this.image).getBitmap();
+        Bitmap bitmap = ((BitmapDrawable)this.getImage()).getBitmap();
         Bitmap bitmapResized = Bitmap.createScaledBitmap(bitmap, size, size, false);
         return new BitmapDrawable(resources, bitmapResized);
     }

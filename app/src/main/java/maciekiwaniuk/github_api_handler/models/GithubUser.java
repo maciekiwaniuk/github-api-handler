@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Contains information about single GitHub repository.
+ * Contains information about GitHub's user
  */
 public class GithubUser {
 

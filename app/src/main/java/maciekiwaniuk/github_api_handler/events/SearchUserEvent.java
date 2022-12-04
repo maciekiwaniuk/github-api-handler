@@ -13,6 +13,9 @@ import maciekiwaniuk.github_api_handler.http_clients.GithubUserHttpClient;
 import maciekiwaniuk.github_api_handler.http_clients.ImageDrawableHttpClient;
 import maciekiwaniuk.github_api_handler.models.GithubUser;
 
+/**
+ * Handles click event on search button. Searches and displays data about user by passed username.
+ */
 final public class SearchUserEvent {
 
     public SearchUserEvent(GithubUser user, ActivityMainBinding binding) {
