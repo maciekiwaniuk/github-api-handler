@@ -19,7 +19,7 @@ import maciekiwaniuk.github_api_handler.models.GithubUser;
 final public class SearchUserEvent {
 
     public SearchUserEvent(GithubUser user, ActivityMainBinding binding) {
-        EditText usernameText = (EditText) binding.getRoot().findViewById(R.id.usernameText);
+        EditText usernameText = binding.getRoot().findViewById(R.id.usernameText);
         String username = usernameText.getText().toString();
 
         if (username.length() == 0) return;
