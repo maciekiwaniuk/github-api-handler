@@ -1,14 +1,10 @@
 package maciekiwaniuk.github_api_handler.events;
 
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import maciekiwaniuk.github_api_handler.R;

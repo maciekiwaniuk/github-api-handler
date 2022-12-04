@@ -1,9 +1,5 @@
 package maciekiwaniuk.github_api_handler.http_clients;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -28,14 +24,6 @@ public class HttpClient {
         input.close();
 
         this.data = response.toString();
-    }
-
-    public JSONArray getDataAsJSONArray() throws JSONException {
-        return new JSONArray(this.data);
-    }
-
-    public JSONObject getDataAsJSONObject() throws JSONException {
-        return new JSONObject(this.data);
     }
 
 }

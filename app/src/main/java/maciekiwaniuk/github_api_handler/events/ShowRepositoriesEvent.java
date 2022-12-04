@@ -3,15 +3,12 @@ package maciekiwaniuk.github_api_handler.events;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-
-import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,7 +18,6 @@ import maciekiwaniuk.github_api_handler.R;
 import maciekiwaniuk.github_api_handler.databinding.ActivityMainBinding;
 import maciekiwaniuk.github_api_handler.handlers.DateHandler;
 import maciekiwaniuk.github_api_handler.http_clients.GithubRepositoriesHttpClient;
-import maciekiwaniuk.github_api_handler.http_clients.ImageDrawableHttpClient;
 import maciekiwaniuk.github_api_handler.models.GithubRepository;
 import maciekiwaniuk.github_api_handler.models.GithubUser;
 

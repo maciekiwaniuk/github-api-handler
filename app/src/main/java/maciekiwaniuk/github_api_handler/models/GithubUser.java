@@ -32,11 +32,6 @@ public class GithubUser {
     public Drawable avatarDrawable;
 
     /**
-     * User's repositories
-     */
-    public ArrayList<GithubRepository> githubRepositories = new ArrayList<>();
-
-    /**
      * Specifies if textView with error message should be visible.
      */
     public ObservableBoolean userNotFoundError = new ObservableBoolean(false);
@@ -66,9 +61,7 @@ public class GithubUser {
      */
     public ObservableBoolean readyToDisplayRepositories = new ObservableBoolean(false);
 
-    public GithubUser() {
-
-    }
+    public GithubUser() {}
 
     public void setAvatar(Drawable avatar) {
         this.avatarDrawable = avatar;
@@ -100,7 +93,4 @@ public class GithubUser {
         this.bio = (bio.equals("null") ? null : bio);
     }
 
-    public void setRepositories(ArrayList<GithubRepository> githubRepositories) {
-        this.githubRepositories = githubRepositories;
-    }
 }
