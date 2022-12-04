@@ -4,7 +4,7 @@
 
 - Application is made in Java.
 - In application is used [data binding library](https://developer.android.com/topic/libraries/data-binding).
-- App fetches and displays data about user from [GitHub API](https://docs.github.com/en/rest) by his username.
+- App fetches and displays data about user from [GitHub API](https://docs.github.com/en/rest) by username.
 
 # Installation
 
