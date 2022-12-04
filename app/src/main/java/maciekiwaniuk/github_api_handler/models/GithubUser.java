@@ -1,25 +1,18 @@
-package maciekiwaniuk.github_api_handler;
+package maciekiwaniuk.github_api_handler.models;
 
 import android.graphics.drawable.Drawable;
 
 import androidx.databinding.ObservableBoolean;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 /**
- * Fetches and saves data via GitHub API about user by his username.
- * Variable of this class is bound for main_activity.xml to display fetched data about user.
+ * Contains information about single GitHub repository.
  */
-public class GithubApiUserData {
-
-    /**
-     * Url which provides all information about user by his username.
-     */
-    private final String userUrlAPI;
+public class GithubUser {
 
     /**
      * User's information.
@@ -51,12 +44,12 @@ public class GithubApiUserData {
     /**
      * Specifies if progressBar that imitates loading data user should be visible.
      */
-    public ObservableBoolean loadingUserData = new ObservableBoolean(false);
+    public ObservableBoolean loadingUser = new ObservableBoolean(false);
 
     /**
      * Specifies if the element with fetched user data should be visible.
      */
-    public ObservableBoolean readyToDisplayUserData = new ObservableBoolean(false);
+    public ObservableBoolean readyToDisplayUser = new ObservableBoolean(false);
 
     /**
      * Specifies if textView with info message that user doesn't have any repositories should be visible.
@@ -73,26 +66,18 @@ public class GithubApiUserData {
      */
     public ObservableBoolean readyToDisplayRepositories = new ObservableBoolean(false);
 
-    /**
-     * Initializes main API URL.
-     */
-    public GithubApiUserData(String username) throws Exception {
-        this.userUrlAPI = "https://api.github.com/users/" + username;
+    public GithubUser() {
+
     }
 
-    /**
-     * Fetches user data using URL and saves it to object attributes.
-     */
-    public void fetchUserData() throws Exception {
-        JSONObject userData = new JSONObject(StaticHelper.fetchDataFromUrlAsString(this.userUrlAPI));
-
-        this.assignUserDataAfterFetch(userData);
+    public void setAvatar(Drawable avatar) {
+        this.avatarDrawable = avatar;
     }
 
     /**
      * Saves data from passed object to attributes.
      */
-    public void assignUserDataAfterFetch(JSONObject userData) throws JSONException {
+    public void assignVariablesFromFetchedJSONObject(JSONObject userData) throws JSONException {
         String name = userData.getString("name");
         String company = userData.getString("company");
         String blog = userData.getString("blog");
@@ -115,23 +100,7 @@ public class GithubApiUserData {
         this.bio = (bio.equals("null") ? null : bio);
     }
 
-    /**
-     * Fetches repositories using repos URL and saves it.
-     */
-    public void fetchRepositories() throws Exception {
-        JSONArray repositoriesData = new JSONArray(StaticHelper.fetchDataFromUrlAsString(this.reposUrl));
-
-        int limitNumberOfRepositories = 30;
-        int count = 0;
-
-        for (int i = 0; i < repositoriesData.length(); i++) {
-            if (count == limitNumberOfRepositories) break;
-
-            JSONObject repository = repositoriesData.getJSONObject(i);
-            this.githubRepositories.add(new GithubRepository(repository));
-            count++;
-        }
-
+    public void setRepositories(ArrayList<GithubRepository> githubRepositories) {
+        this.githubRepositories = githubRepositories;
     }
-
 }

@@ -1,4 +1,4 @@
-package maciekiwaniuk.github_api_handler;
+package maciekiwaniuk.github_api_handler.models;
 
 import org.json.JSONException;
 import org.json.JSONObject;

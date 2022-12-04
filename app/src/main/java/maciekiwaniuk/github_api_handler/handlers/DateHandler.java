@@ -1,4 +1,4 @@
-package maciekiwaniuk.github_api_handler;
+package maciekiwaniuk.github_api_handler.handlers;
 
 import android.os.Build;
 

@@ -5,7 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
-        <variable name="userData" type="maciekiwaniuk.github_api_handler.GithubApiUserData"/>
+        <variable name="user" type="maciekiwaniuk.github_api_handler.models.GithubUser"/>
     </data>
 
     <ScrollView
@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             tools:context=".MainActivity">
 
@@ -76,12 +76,12 @@
 
                     <!-- User data progress bar -->
                     <ProgressBar
-                        android:id="@+id/userDataProgressBar"
+                        android:id="@+id/userProgressBar"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="15dp"
                         android:indeterminate="true"
-                        android:visibility="@{userData.loadingUserData ? View.VISIBLE : View.GONE}"/>
+                        android:visibility="@{user.loadingUser ? View.VISIBLE : View.GONE}"/>
 
                     <!-- Text view to display error message, hidden by default -->
                     <TextView
@@ -93,7 +93,7 @@
                         android:textSize="18sp"
                         android:text="Couldn\'t find user with passed username"
                         android:textColor="@color/white"
-                        android:visibility="@{userData.userNotFoundError ? View.VISIBLE : View.GONE}"/>
+                        android:visibility="@{user.userNotFoundError ? View.VISIBLE : View.GONE}"/>
 
                     <!-- Element which contains the whole content of fetched data  -->
                     <LinearLayout
@@ -101,7 +101,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:visibility="@{userData.readyToDisplayUserData ? View.VISIBLE : View.GONE}">
+                        android:visibility="@{user.readyToDisplayUser ? View.VISIBLE : View.GONE}">
 
                         <!-- Avatar, name and username -->
                         <LinearLayout
@@ -124,7 +124,7 @@
                                     android:id="@+id/avatarImageView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:src="@{userData.avatarDrawable}"/>
+                                    android:src="@{user.avatarDrawable}"/>
                             </com.google.android.material.card.MaterialCardView>
 
                             <!-- Element for name and username -->
@@ -144,8 +144,8 @@
                                     android:gravity="bottom"
                                     android:textStyle="bold"
                                     android:textColor="@color/white"
-                                    android:text="@{userData.name}"
-                                    android:visibility="@{userData.name != null ? View.VISIBLE : View.INVISIBLE}"/>
+                                    android:text="@{user.name}"
+                                    android:visibility="@{user.name != null ? View.VISIBLE : View.INVISIBLE}"/>
 
                                 <!-- Username -->
                                 <TextView
@@ -156,7 +156,7 @@
                                     android:textColor="@color/white"
                                     android:textAlignment="textStart"
                                     android:layout_marginStart="15dp"
-                                    android:text="@{userData.username}"/>
+                                    android:text="@{user.username}"/>
 
                             </LinearLayout>
 
@@ -171,8 +171,8 @@
                             android:textSize="21sp"
                             android:textColor="@color/white"
                             android:textStyle="italic"
-                            android:text="@{userData.bio}"
-                            android:visibility="@{userData.bio != null ? View.VISIBLE : View.GONE}"/>
+                            android:text="@{user.bio}"
+                            android:visibility="@{user.bio != null ? View.VISIBLE : View.GONE}"/>
 
                         <!-- Followers, following -->
                         <LinearLayout
@@ -189,7 +189,7 @@
                                 android:textSize="21sp"
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
-                                android:text="@{userData.followers}"/>
+                                android:text="@{user.followers}"/>
 
                             <!-- Following -->
                             <TextView
@@ -199,7 +199,7 @@
                                 android:textColor="@color/white"
                                 android:textStyle="bold"
                                 android:layout_marginLeft="10dp"
-                                android:text="@{userData.following}"/>
+                                android:text="@{user.following}"/>
 
                         </LinearLayout>
 
@@ -212,8 +212,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:text="@{userData.company}"
-                            android:visibility="@{userData.company != null ? View.VISIBLE : View.GONE}"/>
+                            android:text="@{user.company}"
+                            android:visibility="@{user.company != null ? View.VISIBLE : View.GONE}"/>
 
                         <!-- Location -->
                         <TextView
@@ -224,8 +224,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:text="@{userData.location}"
-                            android:visibility="@{userData.location != null ? View.VISIBLE : View.GONE}"/>
+                            android:text="@{user.location}"
+                            android:visibility="@{user.location != null ? View.VISIBLE : View.GONE}"/>
 
                         <!-- Email -->
                         <TextView
@@ -236,8 +236,8 @@
                             android:textAlignment="center"
                             android:textColor="@color/white"
                             android:textSize="18sp"
-                            android:text="@{userData.email}"
-                            android:visibility="@{userData.email != null ? View.VISIBLE : View.GONE}"/>
+                            android:text="@{user.email}"
+                            android:visibility="@{user.email != null ? View.VISIBLE : View.GONE}"/>
 
                         <!-- Blog -->
                         <TextView
@@ -249,8 +249,8 @@
                             android:textColor="@color/white"
                             android:textSize="18sp"
                             android:textIsSelectable="true"
-                            android:text="@{userData.blog}"
-                            android:visibility="@{userData.blog != null ? View.VISIBLE : View.GONE}"/>
+                            android:text="@{user.blog}"
+                            android:visibility="@{user.blog != null ? View.VISIBLE : View.GONE}"/>
 
                         <!-- Created at -->
                         <TextView
@@ -262,7 +262,7 @@
                             android:textColor="@color/white"
                             android:textSize="20sp"
                             android:textStyle="bold"
-                            android:text="@{userData.createdAt}"/>
+                            android:text="@{user.createdAt}"/>
 
                         <!-- Show repositories button -->
                         <Button
@@ -276,7 +276,7 @@
                             android:backgroundTint="@android:color/white"
                             android:textColor="@color/black"
                             android:text="Show repositories"
-                            android:visibility="@{userData.readyToDisplayRepositories ? View.GONE : View.VISIBLE}"/>
+                            android:visibility="@{user.readyToDisplayRepositories ? View.GONE : View.VISIBLE}"/>
 
                         <!-- Element for repositories things -->
                         <LinearLayout
@@ -293,7 +293,7 @@
                                 android:layout_height="50dp"
                                 android:layout_marginTop="15dp"
                                 android:indeterminate="true"
-                                android:visibility="@{userData.loadingRepositories ? View.VISIBLE : View.GONE}"/>
+                                android:visibility="@{user.loadingRepositories ? View.VISIBLE : View.GONE}"/>
 
                             <!-- Repositories not found info -->
                             <TextView
@@ -305,7 +305,7 @@
                                 android:textColor="@color/black"
                                 android:textStyle="bold"
                                 android:text="User doesn't have any repositories yet."
-                                android:visibility="@{userData.repositoriesNotFoundInfo ? View.VISIBLE : View.GONE}"/>
+                                android:visibility="@{user.repositoriesNotFoundInfo ? View.VISIBLE : View.GONE}"/>
 
                             <!-- Repositories -->
                             <LinearLayout
@@ -313,7 +313,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical"
-                                android:visibility="@{userData.readyToDisplayRepositories ? View.VISIBLE : View.GONE}">
+                                android:visibility="@{user.readyToDisplayRepositories ? View.VISIBLE : View.GONE}">
                             </LinearLayout>
 
                         </LinearLayout>
